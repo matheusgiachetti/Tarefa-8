@@ -12,7 +12,144 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Conteúdo do site será adicionado nas próximas etapas -->
+
+    <!-- ===== CABEÇALHO: logo, menu de navegação e botão de modo escuro ===== -->
+    <header class="cabecalho" id="topo">
+        <div class="container cabecalho-conteudo">
+            <!-- Logo em texto -->
+            <a href="#topo" class="logo">Portal do <span>Estudante</span></a>
+
+            <!-- Menu com links âncora para as seções da página -->
+            <nav class="menu">
+                <ul>
+                    <li><a href="#sobre">Sobre</a></li>
+                    <li><a href="#calculadora">Calculadora</a></li>
+                    <li><a href="#disciplinas">Disciplinas</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                </ul>
+            </nav>
+
+            <!-- Botão que vai alternar o modo escuro (ação adicionada no JS) -->
+            <button type="button" class="btn btn-claro" id="toggle-dark">Modo escuro</button>
+        </div>
+    </header>
+
+    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
+    <main>
+
+        <!-- Banner de boas-vindas -->
+        <section class="banner">
+            <div class="container banner-conteudo">
+                <!-- O span fica vazio: o texto será escrito pelo efeito de digitação no JS -->
+                <h1><span id="typewriter"></span></h1>
+                <p>Organize seus estudos, acompanhe suas notas e conheça as disciplinas do semestre.</p>
+                <!-- Botão que vai abrir o pop-up (modal) -->
+                <button type="button" class="btn btn-claro" id="open-modal">Saiba mais</button>
+            </div>
+        </section>
+
+        <!-- Seção "Sobre o portal" -->
+        <section class="secao" id="sobre">
+            <div class="container">
+                <h2>Sobre o portal</h2>
+                <!-- Caixas lado a lado (Flexbox) com os recursos do portal -->
+                <div class="sobre-itens">
+                    <article class="sobre-item">
+                        <h3>Organização</h3>
+                        <p>Reúna em um só lugar as informações mais importantes do seu curso.</p>
+                    </article>
+                    <article class="sobre-item">
+                        <h3>Notas</h3>
+                        <p>Calcule a sua média de forma rápida e saiba se foi aprovado.</p>
+                    </article>
+                    <article class="sobre-item">
+                        <h3>Disciplinas</h3>
+                        <p>Veja as matérias do semestre, a carga horária e os professores.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção "Calculadora de média" -->
+        <section class="secao secao-alternada" id="calculadora">
+            <div class="container">
+                <h2>Calculadora de média</h2>
+                <p class="secao-descricao">Digite as duas notas (de 0 a 10) para calcular a sua média.</p>
+
+                <!-- Caixa da calculadora com os campos e o botão -->
+                <div class="calculadora">
+                    <!-- Campos de nota lado a lado -->
+                    <div class="calculadora-campos">
+                        <div class="campo">
+                            <label for="nota1">Nota 1</label>
+                            <input type="number" id="nota1" min="0" max="10" step="0.1" placeholder="Ex.: 7.5">
+                        </div>
+                        <div class="campo">
+                            <label for="nota2">Nota 2</label>
+                            <input type="number" id="nota2" min="0" max="10" step="0.1" placeholder="Ex.: 8">
+                        </div>
+                    </div>
+                    <!-- Botão que vai calcular a média (ação adicionada no JS) -->
+                    <button type="button" class="btn btn-primario" id="btn-calcular">Calcular</button>
+                    <!-- Parágrafo onde o resultado da média será mostrado -->
+                    <p id="resultado-media" class="resultado">O resultado aparecerá aqui.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção "Disciplinas" com cards -->
+        <section class="secao" id="disciplinas">
+            <div class="container">
+                <h2>Disciplinas</h2>
+                <!-- Lista de cards organizada com Flexbox -->
+                <div class="cards">
+                    <article class="card">
+                        <h3>Web Design</h3>
+                        <p>HTML, CSS e JavaScript para criar páginas modernas e responsivas.</p>
+                        <span class="card-info">80 horas</span>
+                    </article>
+                    <article class="card">
+                        <h3>Algoritmos</h3>
+                        <p>Lógica de programação, estruturas de decisão e de repetição.</p>
+                        <span class="card-info">80 horas</span>
+                    </article>
+                    <article class="card">
+                        <h3>Banco de Dados</h3>
+                        <p>Modelagem de dados, tabelas e consultas com SQL.</p>
+                        <span class="card-info">60 horas</span>
+                    </article>
+                    <article class="card">
+                        <h3>Engenharia de Software</h3>
+                        <p>Requisitos, metodologias ágeis e trabalho em equipe.</p>
+                        <span class="card-info">40 horas</span>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== RODAPÉ ===== -->
+    <footer class="rodape" id="contato">
+        <div class="container rodape-conteudo">
+            <p>&copy; 2026 Portal do Estudante. Projeto fictício para a disciplina de Web Design.</p>
+            <p>Contato: contato@portaldoestudante.com</p>
+        </div>
+    </footer>
+
+    <!-- Botão voltar ao topo (escondido pelo CSS; o JS vai mostrar ao rolar a página) -->
+    <button type="button" class="back-to-top" id="back-to-top" aria-label="Voltar ao topo">&uarr;</button>
+
+    <!-- ===== MODAL (pop-up), escondido pelo CSS até ser aberto pelo JS ===== -->
+    <div class="modal" id="modal">
+        <!-- Caixa central do pop-up -->
+        <div class="modal-conteudo">
+            <!-- Botão de fechar o modal -->
+            <button type="button" class="modal-fechar" id="close-modal" aria-label="Fechar">&times;</button>
+            <h2>Bem-vindo ao Portal do Estudante!</h2>
+            <p>Aqui você encontra informações sobre o curso, calcula a sua média e conhece as disciplinas do semestre.</p>
+        </div>
+    </div>
 
     <!-- JavaScript externo carregado no final do body, depois que o HTML já existe -->
     <script src="script.js"></script>

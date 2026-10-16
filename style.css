@@ -2,7 +2,7 @@
    Portal do Estudante - Folha de estilos
    ========================================================== */
 
-/* Variáveis de cor usadas em todo o site */
+/* Variáveis de cor usadas em todo o site (tema claro) */
 :root {
     --cor-primaria: #1e3a8a;      /* azul principal */
     --cor-secundaria: #3b82f6;    /* azul de destaque */
@@ -11,6 +11,22 @@
     --cor-texto: #1f2937;         /* texto principal */
     --cor-texto-suave: #6b7280;   /* texto secundário */
     --cor-borda: #e5e7eb;         /* bordas e divisórias */
+    --cor-alternada: #eaf0fb;     /* fundo das seções alternadas */
+    --sombra: 0 4px 12px rgba(0, 0, 0, 0.08); /* sombra dos cartões */
+}
+
+/* Modo escuro: quando o body recebe a classe .dark, as variáveis mudam
+   e todo o site troca de cor automaticamente */
+body.dark {
+    --cor-primaria: #0f172a;
+    --cor-secundaria: #60a5fa;
+    --cor-fundo: #111827;
+    --cor-superficie: #1f2937;
+    --cor-texto: #f3f4f6;
+    --cor-texto-suave: #9ca3af;
+    --cor-borda: #374151;
+    --cor-alternada: #172033;
+    --sombra: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 /* Reset básico: remove margens e espaçamentos padrão do navegador */
@@ -31,6 +47,7 @@ body {
     line-height: 1.6;
     background-color: var(--cor-fundo);
     color: var(--cor-texto);
+    transition: background-color 0.3s, color 0.3s; /* troca de tema suave */
 }
 
 /* Imagens nunca ultrapassam a largura do elemento pai */
@@ -49,4 +66,436 @@ a {
 ul,
 ol {
     list-style: none;
+}
+
+/* ==========================================================
+   Elementos reutilizáveis
+   ========================================================== */
+
+/* Limita a largura do conteúdo e centraliza na tela */
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* Estilo base dos botões */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+/* Efeito ao passar o mouse sobre o botão */
+.btn:hover {
+    opacity: 0.85;
+}
+
+/* Botão claro (usado sobre fundos azuis) */
+.btn-claro {
+    background-color: #ffffff;
+    color: #1e3a8a;
+}
+
+/* Botão principal (azul) */
+.btn-primario {
+    background-color: var(--cor-secundaria);
+    color: #ffffff;
+}
+
+/* ==========================================================
+   Cabeçalho
+   ========================================================== */
+
+/* Cabeçalho fixo no topo da tela ao rolar */
+.cabecalho {
+    background-color: var(--cor-primaria);
+    color: #ffffff;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+/* Flexbox: logo, menu e botão na mesma linha */
+.cabecalho-conteudo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 15px 0;
+}
+
+/* Logo em texto */
+.logo {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+/* Parte destacada da logo */
+.logo span {
+    color: #93c5fd;
+}
+
+/* Flexbox: links do menu lado a lado */
+.menu ul {
+    display: flex;
+    gap: 25px;
+}
+
+/* Links do menu */
+.menu a {
+    padding-bottom: 3px;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s;
+}
+
+/* Sublinhado ao passar o mouse no link */
+.menu a:hover {
+    border-bottom-color: #93c5fd;
+}
+
+/* ==========================================================
+   Banner
+   ========================================================== */
+
+/* Fundo em degradê azul */
+.banner {
+    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
+    color: #ffffff;
+    padding: 100px 0;
+}
+
+/* Flexbox em coluna: conteúdo centralizado */
+.banner-conteudo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+}
+
+/* Título do banner; altura mínima para não "pular" durante a digitação */
+.banner h1 {
+    font-size: 2.6rem;
+    min-height: 1.6em;
+}
+
+/* Texto de apoio do banner */
+.banner p {
+    font-size: 1.15rem;
+    max-width: 600px;
+}
+
+/* ==========================================================
+   Seções
+   ========================================================== */
+
+/* Espaçamento interno padrão das seções */
+.secao {
+    padding: 70px 0;
+}
+
+/* Seções com fundo alternado para separar visualmente */
+.secao-alternada {
+    background-color: var(--cor-alternada);
+}
+
+/* Títulos das seções */
+.secao h2 {
+    text-align: center;
+    color: var(--cor-secundaria);
+    margin-bottom: 30px;
+    font-size: 2rem;
+}
+
+/* Texto explicativo abaixo do título */
+.secao-descricao {
+    text-align: center;
+    color: var(--cor-texto-suave);
+    margin: -15px 0 30px;
+}
+
+/* ----- Sobre o portal ----- */
+
+/* Flexbox: caixas lado a lado que quebram linha se faltar espaço */
+.sobre-itens {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Cada caixa ocupa a mesma largura (flex: 1) */
+.sobre-item {
+    flex: 1 1 250px;
+    background-color: var(--cor-superficie);
+    padding: 25px;
+    border-radius: 10px;
+    border-top: 4px solid var(--cor-secundaria);
+    box-shadow: var(--sombra);
+}
+
+/* Título de cada caixa */
+.sobre-item h3 {
+    margin-bottom: 10px;
+}
+
+/* ----- Calculadora de média ----- */
+
+/* Flexbox em coluna: campos, botão e resultado empilhados */
+.calculadora {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: var(--cor-superficie);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: var(--sombra);
+}
+
+/* Flexbox: os dois campos de nota lado a lado */
+.calculadora-campos {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+
+/* Cada campo (label + input) empilhado em coluna */
+.campo {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 5px;
+}
+
+/* Rótulo do campo */
+.campo label {
+    font-weight: bold;
+}
+
+/* Caixa de digitação das notas */
+.campo input {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+}
+
+/* Destaque no campo quando está selecionado */
+.campo input:focus {
+    outline: 2px solid var(--cor-secundaria);
+}
+
+/* Parágrafo do resultado da média */
+.resultado {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--cor-texto-suave);
+    text-align: center;
+}
+
+/* ----- Disciplinas ----- */
+
+/* Flexbox: cards lado a lado com quebra de linha */
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Cada card com largura base de 230px, crescendo para preencher a linha */
+.card {
+    flex: 1 1 230px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: var(--cor-superficie);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: var(--sombra);
+    transition: transform 0.2s;
+}
+
+/* Card "sobe" um pouco ao passar o mouse */
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Título do card */
+.card h3 {
+    color: var(--cor-secundaria);
+}
+
+/* Descrição do card ocupa o espaço livre, empurrando a info para baixo */
+.card p {
+    flex: 1;
+    color: var(--cor-texto-suave);
+}
+
+/* Etiqueta com a carga horária */
+.card-info {
+    align-self: flex-start;
+    background-color: var(--cor-alternada);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+/* ==========================================================
+   Rodapé
+   ========================================================== */
+
+.rodape {
+    background-color: var(--cor-primaria);
+    color: #ffffff;
+    padding: 25px 0;
+}
+
+/* Flexbox: textos do rodapé nas extremidades */
+.rodape-conteudo {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 0.9rem;
+}
+
+/* ==========================================================
+   Botão voltar ao topo
+   ========================================================== */
+
+/* Botão redondo fixo no canto inferior direito, escondido por padrão */
+.back-to-top {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--cor-secundaria);
+    color: #ffffff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: var(--sombra);
+    opacity: 0;           /* invisível */
+    visibility: hidden;   /* não pode ser clicado */
+    transition: opacity 0.3s, visibility 0.3s;
+    z-index: 20;
+}
+
+/* Classe que o JS vai adicionar para mostrar o botão */
+.back-to-top.visivel {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ==========================================================
+   Modal (pop-up)
+   ========================================================== */
+
+/* Fundo escuro que cobre a tela inteira, escondido por padrão */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0; /* top, right, bottom e left = 0 */
+    background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 30;
+}
+
+/* Classe que o JS vai adicionar para abrir o modal (Flexbox centraliza a caixa) */
+.modal.aberto {
+    display: flex;
+}
+
+/* Caixa branca do pop-up */
+.modal-conteudo {
+    position: relative;
+    background-color: var(--cor-superficie);
+    color: var(--cor-texto);
+    max-width: 450px;
+    width: 100%;
+    padding: 35px 30px 30px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Título do modal */
+.modal-conteudo h2 {
+    color: var(--cor-secundaria);
+    margin-bottom: 15px;
+}
+
+/* Botão "X" de fechar no canto superior direito */
+.modal-fechar {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    line-height: 1;
+    color: var(--cor-texto-suave);
+    cursor: pointer;
+}
+
+/* ==========================================================
+   Responsividade (celular)
+   ========================================================== */
+
+@media (max-width: 768px) {
+    /* Cabeçalho em coluna: logo, menu e botão empilhados */
+    .cabecalho-conteudo {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    /* Links do menu quebram linha e ficam centralizados */
+    .menu ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    /* Banner com menos espaço e título menor */
+    .banner {
+        padding: 60px 0;
+    }
+
+    .banner h1 {
+        font-size: 1.8rem;
+    }
+
+    /* Seções com menos espaçamento */
+    .secao {
+        padding: 50px 0;
+    }
+
+    .secao h2 {
+        font-size: 1.6rem;
+    }
+
+    /* Campos de nota um embaixo do outro */
+    .calculadora-campos {
+        flex-direction: column;
+    }
+
+    /* Rodapé centralizado em coluna */
+    .rodape-conteudo {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
 }
