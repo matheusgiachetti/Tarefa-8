@@ -107,6 +107,46 @@ ol {
     color: #ffffff;
 }
 
+/* Botão só com borda (ação secundária) */
+.btn-contorno {
+    background-color: transparent;
+    color: var(--cor-secundaria);
+    border: 2px solid var(--cor-secundaria);
+}
+
+/* Botões pequenos de filtro (dias da semana e lista de tarefas) */
+.btn-filtro {
+    padding: 6px 16px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 20px;
+    background-color: var(--cor-superficie);
+    color: var(--cor-texto);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+/* Filtro com o mouse por cima */
+.btn-filtro:hover {
+    border-color: var(--cor-secundaria);
+}
+
+/* Filtro selecionado (classe .ativo, trocada pelo JS) */
+.btn-filtro.ativo {
+    background-color: var(--cor-secundaria);
+    border-color: var(--cor-secundaria);
+    color: #ffffff;
+}
+
+/* Esconde um elemento da tela, mas mantém para leitores de tela */
+.oculto {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+}
+
 /* ==========================================================
    Cabeçalho
    ========================================================== */
@@ -279,19 +319,35 @@ ol {
     font-weight: bold;
 }
 
-/* Caixa de digitação das notas */
-.campo input {
+/* Campos de digitação (notas, tabuada, tarefas e formulário de contato) */
+.campo input,
+.campo select,
+.campo textarea,
+.tarefas-form input,
+.tabuada-form input {
     padding: 10px;
     font-size: 1rem;
+    font-family: inherit;
     border: 1px solid var(--cor-borda);
     border-radius: 6px;
     background-color: var(--cor-fundo);
     color: var(--cor-texto);
+    transition: border-color 0.2s;
 }
 
 /* Destaque no campo quando está selecionado */
-.campo input:focus {
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus,
+.tarefas-form input:focus,
+.tabuada-form input:focus {
     outline: 2px solid var(--cor-secundaria);
+    border-color: transparent;
+}
+
+/* A caixa de mensagem só pode ser redimensionada na vertical */
+.campo textarea {
+    resize: vertical;
 }
 
 /* Parágrafo do resultado da média */
@@ -367,6 +423,558 @@ ol {
     font-weight: bold;
 }
 
+/* ----- Mural de avisos ----- */
+
+/* Flexbox: contador de um lado e botão do outro */
+.avisos-barra {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+/* Avisos empilhados em coluna */
+.avisos {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Cada aviso: data à esquerda e texto à direita */
+.aviso-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background-color: var(--cor-superficie);
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 5px solid var(--cor-borda);
+    box-shadow: var(--sombra);
+    transition: border-color 0.3s;
+}
+
+/* Aviso ainda não lido ganha a borda azul (o JS remove a classe) */
+.aviso-item.nao-lido {
+    border-left-color: var(--cor-secundaria);
+}
+
+/* Círculo com a data do aviso */
+.aviso-data {
+    flex-shrink: 0; /* não deixa o círculo encolher */
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: var(--cor-alternada);
+    font-weight: bold;
+}
+
+/* Título do aviso */
+.aviso-item h3 {
+    margin-bottom: 5px;
+}
+
+/* Texto do aviso */
+.aviso-item p {
+    color: var(--cor-texto-suave);
+}
+
+/* ----- Cartão do aluno ----- */
+
+/* Flexbox: cartão e ações lado a lado, centralizados */
+.cartao-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+/* Cartão em degradê no formato de uma carteirinha */
+.cartao-aluno {
+    width: 100%;
+    max-width: 380px;
+    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
+    color: #ffffff;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+}
+
+/* O cartão inclina um pouco ao passar o mouse */
+.cartao-aluno:hover {
+    transform: rotate(-2deg) scale(1.02);
+}
+
+/* Topo do cartão: avatar e textos lado a lado */
+.cartao-topo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+/* Círculo com a inicial do nome */
+.cartao-avatar {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.25);
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Nome da instituição */
+.cartao-instituicao {
+    font-weight: bold;
+}
+
+/* Texto pequeno "Carteirinha digital" */
+.cartao-tipo {
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+/* Nome do aluno */
+.cartao-nome {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+/* Lista de dados: cada linha com rótulo à esquerda e valor à direita */
+.cartao-dados li {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Rótulos (RA, Curso...) mais apagados */
+.cartao-dados span {
+    opacity: 0.8;
+}
+
+/* Valores alinhados à direita */
+.cartao-dados strong {
+    text-align: right;
+}
+
+/* Coluna de botões ao lado do cartão */
+.cartao-acoes {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 260px;
+}
+
+/* Mensagem das ações do cartão */
+.cartao-mensagem {
+    color: var(--cor-texto-suave);
+    font-size: 0.95rem;
+}
+
+/* ----- Quadro de horários ----- */
+
+/* Flexbox: botões dos dias lado a lado e centralizados */
+.horarios-filtros {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* Rolagem horizontal quando a tabela não cabe na tela */
+.tabela-container {
+    overflow-x: auto;
+    border-radius: 10px;
+    box-shadow: var(--sombra);
+}
+
+/* Tabela ocupando toda a largura, com bordas unidas */
+.tabela-horarios {
+    width: 100%;
+    min-width: 650px;
+    border-collapse: collapse;
+    background-color: var(--cor-superficie);
+}
+
+/* Células da tabela */
+.tabela-horarios th,
+.tabela-horarios td {
+    padding: 14px;
+    text-align: center;
+    border-bottom: 1px solid var(--cor-borda);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Cabeçalho da tabela em azul */
+.tabela-horarios thead th {
+    background-color: var(--cor-primaria);
+    color: #ffffff;
+}
+
+/* Linha da tabela muda de cor ao passar o mouse */
+.tabela-horarios tbody tr:hover {
+    background-color: var(--cor-alternada);
+}
+
+/* Linha do intervalo em itálico e mais apagada */
+.linha-intervalo td {
+    font-style: italic;
+    color: var(--cor-texto-suave);
+}
+
+/* Coluna do dia escolhido (classe .destaque, adicionada pelo JS) */
+.tabela-horarios .destaque {
+    background-color: var(--cor-secundaria);
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/* Texto abaixo da tabela */
+.horarios-info {
+    text-align: center;
+    margin-top: 15px;
+    color: var(--cor-texto-suave);
+}
+
+/* ----- Lista de tarefas ----- */
+
+/* Caixa central da lista */
+.tarefas {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: var(--cor-superficie);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: var(--sombra);
+}
+
+/* Flexbox: campo de texto ocupa o espaço e o botão fica ao lado */
+.tarefas-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.tarefas-form input {
+    flex: 1;
+}
+
+/* Botões de filtro da lista */
+.tarefas-filtros {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+/* Lista de tarefas em coluna */
+.lista-tarefas {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Cada tarefa: texto à esquerda e botão de remover à direita */
+.tarefa {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 15px;
+    background-color: var(--cor-fundo);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+/* Tarefa com o mouse por cima */
+.tarefa:hover {
+    background-color: var(--cor-alternada);
+}
+
+/* Tarefa concluída fica riscada e apagada */
+.tarefa.concluida .tarefa-texto {
+    text-decoration: line-through;
+    color: var(--cor-texto-suave);
+}
+
+/* Botão "×" para remover a tarefa */
+.tarefa-remover {
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    line-height: 1;
+    color: var(--cor-texto-suave);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+/* "×" fica vermelho ao passar o mouse */
+.tarefa-remover:hover {
+    color: #dc2626;
+}
+
+/* Resumo da quantidade de tarefas */
+.tarefas-contador {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: var(--cor-texto-suave);
+    text-align: right;
+}
+
+/* ----- Tabuada ----- */
+
+/* Caixa central da tabuada */
+.tabuada {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: var(--cor-superficie);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: var(--sombra);
+}
+
+/* Flexbox: rótulo, campo e botão na mesma linha */
+.tabuada-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tabuada-form label {
+    font-weight: bold;
+}
+
+.tabuada-form input {
+    flex: 1;
+}
+
+/* Resultado em duas colunas que quebram linha (Flexbox) */
+.tabuada-resultado {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Cada linha da tabuada ocupa metade da largura */
+.tabuada-resultado li {
+    flex: 1 1 45%;
+    padding: 8px 12px;
+    background-color: var(--cor-alternada);
+    border-radius: 6px;
+    text-align: center;
+}
+
+/* Mensagem inicial ocupa a linha inteira */
+.tabuada-resultado .tabuada-vazia {
+    flex-basis: 100%;
+    background: none;
+    color: var(--cor-texto-suave);
+}
+
+/* ----- Depoimentos ----- */
+
+/* Área central dos depoimentos */
+.depoimentos {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* Depoimentos escondidos por padrão */
+.depoimento {
+    display: none;
+    background-color: var(--cor-superficie);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: var(--sombra);
+    text-align: center;
+}
+
+/* Só o depoimento com a classe .ativo aparece (o JS troca a classe) */
+.depoimento.ativo {
+    display: block;
+}
+
+/* Texto do depoimento em itálico */
+.depoimento-texto {
+    font-size: 1.15rem;
+    font-style: italic;
+    margin-bottom: 15px;
+}
+
+/* Nome de quem deu o depoimento */
+.depoimento-autor {
+    font-weight: bold;
+    color: var(--cor-secundaria);
+}
+
+/* Curso do aluno, em uma linha abaixo do nome */
+.depoimento-autor span {
+    display: block;
+    font-weight: normal;
+    font-size: 0.9rem;
+    color: var(--cor-texto-suave);
+}
+
+/* Flexbox: setas e posição centralizadas */
+.depoimentos-controles {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Botões redondos de seta */
+.btn-seta {
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--cor-secundaria);
+    color: #ffffff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+/* Seta aumenta um pouco ao passar o mouse */
+.btn-seta:hover {
+    transform: scale(1.1);
+}
+
+/* ----- Perguntas frequentes ----- */
+
+/* Lista de perguntas centralizada */
+.faq {
+    max-width: 750px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Cada pergunta com sua resposta */
+.faq-item {
+    background-color: var(--cor-superficie);
+    border-radius: 8px;
+    box-shadow: var(--sombra);
+    overflow: hidden;
+}
+
+/* Pergunta em forma de botão que ocupa toda a largura */
+.faq-pergunta {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 18px 20px;
+    background: none;
+    border: none;
+    color: var(--cor-texto);
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: left;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+/* Pergunta muda de cor ao passar o mouse */
+.faq-pergunta:hover {
+    color: var(--cor-secundaria);
+}
+
+/* Sinal "+" no fim da pergunta (criado pelo CSS) */
+.faq-pergunta::after {
+    content: "+";
+    font-size: 1.4rem;
+    transition: transform 0.3s;
+}
+
+/* Quando o item está aberto, o "+" gira e vira um "×" */
+.faq-item.aberto .faq-pergunta::after {
+    transform: rotate(45deg);
+}
+
+/* Resposta escondida por padrão */
+.faq-resposta {
+    display: none;
+    padding: 0 20px 18px;
+    color: var(--cor-texto-suave);
+}
+
+/* Resposta aparece quando o item recebe a classe .aberto (pelo JS) */
+.faq-item.aberto .faq-resposta {
+    display: block;
+}
+
+/* ----- Formulário de contato ----- */
+
+/* Formulário em coluna, centralizado */
+.formulario {
+    max-width: 650px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    background-color: var(--cor-superficie);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: var(--sombra);
+}
+
+/* Flexbox: nome e e-mail lado a lado */
+.formulario-linha {
+    display: flex;
+    gap: 18px;
+}
+
+/* Contador de caracteres alinhado à direita */
+.contador-caracteres {
+    align-self: flex-end;
+    font-size: 0.85rem;
+    color: var(--cor-texto-suave);
+}
+
+/* Contador perto do limite (classe .limite, adicionada pelo JS) */
+.contador-caracteres.limite {
+    color: #dc2626;
+    font-weight: bold;
+}
+
+/* Botão de enviar alinhado à esquerda */
+.formulario .btn {
+    align-self: flex-start;
+}
+
+/* Mensagem de retorno do formulário */
+.formulario-retorno {
+    font-weight: bold;
+}
+
+/* Cores do retorno (classes trocadas pelo JS) */
+.formulario-retorno.sucesso {
+    color: #16a34a;
+}
+
+.formulario-retorno.erro {
+    color: #dc2626;
+}
+
 /* ==========================================================
    Rodapé
    ========================================================== */
@@ -374,15 +982,52 @@ ol {
 .rodape {
     background-color: var(--cor-primaria);
     color: #ffffff;
-    padding: 25px 0;
+    padding: 40px 0 20px;
 }
 
-/* Flexbox: textos do rodapé nas extremidades */
+/* Flexbox: três colunas lado a lado que quebram linha se faltar espaço */
+.rodape-colunas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+/* Cada coluna com largura base de 200px */
+.rodape-coluna {
+    flex: 1 1 200px;
+}
+
+/* Títulos das colunas */
+.rodape-coluna h3 {
+    margin-bottom: 12px;
+    color: #93c5fd;
+}
+
+/* Itens das listas do rodapé */
+.rodape-coluna li {
+    margin-bottom: 6px;
+}
+
+/* Links do rodapé ficam mais claros ao passar o mouse */
+.rodape-coluna a {
+    opacity: 0.85;
+    transition: opacity 0.2s;
+}
+
+.rodape-coluna a:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+/* Flexbox: textos finais nas extremidades, separados por uma linha */
 .rodape-conteudo {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 10px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
     font-size: 0.9rem;
 }
 
@@ -514,5 +1159,82 @@ ol {
         flex-direction: column;
         align-items: center;
         text-align: center;
+    }
+
+    /* Colunas do rodapé centralizadas */
+    .rodape-colunas {
+        text-align: center;
+    }
+
+    /* Botão do mural ocupa a largura toda, abaixo do contador */
+    .avisos-barra {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
+
+    /* Aviso em coluna: data em cima, texto embaixo */
+    .aviso-item {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    /* Ações do cartão ocupam toda a largura */
+    .cartao-acoes {
+        max-width: 380px;
+        text-align: center;
+    }
+
+    /* Campo e botão das tarefas e da tabuada empilhados */
+    .tarefas-form,
+    .tabuada-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    /* Filtros das tarefas centralizados */
+    .tarefas-filtros {
+        justify-content: center;
+    }
+
+    /* Tabuada em uma coluna só */
+    .tabuada-resultado li {
+        flex-basis: 100%;
+    }
+
+    /* Nome e e-mail do formulário um embaixo do outro */
+    .formulario-linha {
+        flex-direction: column;
+    }
+
+    /* Botão de enviar ocupa toda a largura */
+    .formulario .btn {
+        align-self: stretch;
+    }
+
+    /* Menos espaço interno nas caixas */
+    .formulario,
+    .tarefas,
+    .tabuada,
+    .depoimento {
+        padding: 20px;
+    }
+}
+
+/* Telas bem pequenas (celulares estreitos) */
+@media (max-width: 400px) {
+    /* Título do banner ainda menor */
+    .banner h1 {
+        font-size: 1.5rem;
+    }
+
+    /* Dados do cartão em coluna: rótulo em cima, valor embaixo */
+    .cartao-dados li {
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .cartao-dados strong {
+        text-align: left;
     }
 }

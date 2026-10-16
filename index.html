@@ -23,8 +23,14 @@
             <nav class="menu">
                 <ul>
                     <li><a href="#sobre">Sobre</a></li>
+                    <li><a href="#avisos">Avisos</a></li>
                     <li><a href="#calculadora">Calculadora</a></li>
                     <li><a href="#disciplinas">Disciplinas</a></li>
+                    <li><a href="#cartao">Cartão</a></li>
+                    <li><a href="#horarios">Horários</a></li>
+                    <li><a href="#tarefas">Tarefas</a></li>
+                    <li><a href="#tabuada">Tabuada</a></li>
+                    <li><a href="#faq">FAQ</a></li>
                     <li><a href="#contato">Contato</a></li>
                 </ul>
             </nav>
@@ -65,6 +71,49 @@
                     <article class="sobre-item">
                         <h3>Disciplinas</h3>
                         <p>Veja as matérias do semestre, a carga horária e os professores.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção "Mural de avisos" -->
+        <section class="secao" id="avisos">
+            <div class="container">
+                <h2>Mural de avisos</h2>
+                <!-- Barra com o contador de avisos não lidos e o botão de marcar como lidos -->
+                <div class="avisos-barra">
+                    <p>Avisos não lidos: <strong id="contador-avisos">4</strong></p>
+                    <button type="button" class="btn btn-contorno" id="btn-avisos-lidos">Marcar todos como lidos</button>
+                </div>
+                <!-- Lista de avisos; a classe .nao-lido destaca os avisos novos -->
+                <div class="avisos" id="lista-avisos">
+                    <article class="aviso-item nao-lido">
+                        <span class="aviso-data">20/10</span>
+                        <div>
+                            <h3>Entrega da Tarefa 08</h3>
+                            <p>O prazo para enviar a atividade de JavaScript termina na próxima semana.</p>
+                        </div>
+                    </article>
+                    <article class="aviso-item nao-lido">
+                        <span class="aviso-data">24/10</span>
+                        <div>
+                            <h3>Semana de provas</h3>
+                            <p>As avaliações do bimestre começam na segunda-feira. Confira o quadro de horários.</p>
+                        </div>
+                    </article>
+                    <article class="aviso-item nao-lido">
+                        <span class="aviso-data">31/10</span>
+                        <div>
+                            <h3>Palestra de tecnologia</h3>
+                            <p>Palestra aberta sobre carreira em desenvolvimento web, no auditório principal.</p>
+                        </div>
+                    </article>
+                    <article class="aviso-item nao-lido">
+                        <span class="aviso-data">07/11</span>
+                        <div>
+                            <h3>Inscrições para monitoria</h3>
+                            <p>Alunos com média acima de 8 podem se inscrever como monitores de Algoritmos.</p>
+                        </div>
                     </article>
                 </div>
             </div>
@@ -123,17 +172,353 @@
                         <p>Requisitos, metodologias ágeis e trabalho em equipe.</p>
                         <span class="card-info">40 horas</span>
                     </article>
+                    <article class="card">
+                        <h3>Cálculo I</h3>
+                        <p>Limites, derivadas e aplicações em problemas de engenharia.</p>
+                        <span class="card-info">80 horas</span>
+                    </article>
+                    <article class="card">
+                        <h3>Redes de Computadores</h3>
+                        <p>Modelo OSI, protocolos da internet e endereçamento IP.</p>
+                        <span class="card-info">60 horas</span>
+                    </article>
                 </div>
+            </div>
+        </section>
+
+        <!-- Seção "Cartão do aluno" -->
+        <section class="secao secao-alternada" id="cartao">
+            <div class="container">
+                <h2>Cartão do aluno</h2>
+                <p class="secao-descricao">Seus dados principais. Use os botões para personalizar o cartão.</p>
+
+                <!-- Flexbox: cartão de um lado e ações do outro -->
+                <div class="cartao-area">
+                    <!-- Cartão com os dados do aluno (os textos serão alterados pelo JS) -->
+                    <article class="cartao-aluno" id="cartao-aluno">
+                        <!-- Topo do cartão: avatar com a inicial e nome da instituição -->
+                        <div class="cartao-topo">
+                            <span class="cartao-avatar" id="aluno-inicial">A</span>
+                            <div>
+                                <p class="cartao-instituicao">Portal do Estudante</p>
+                                <p class="cartao-tipo">Carteirinha digital</p>
+                            </div>
+                        </div>
+                        <!-- Nome do aluno em destaque -->
+                        <h3 class="cartao-nome" id="aluno-nome">Aluno Visitante</h3>
+                        <!-- Lista de dados do aluno (rótulo e valor) -->
+                        <ul class="cartao-dados">
+                            <li><span>RA</span><strong id="aluno-ra">000000</strong></li>
+                            <li><span>Curso</span><strong id="aluno-curso">Engenharia de Computação</strong></li>
+                            <li><span>Semestre</span><strong id="aluno-semestre">2º</strong></li>
+                            <li><span>Turno</span><strong id="aluno-turno">Noturno</strong></li>
+                            <li><span>Validade</span><strong id="aluno-validade">12/2026</strong></li>
+                            <li><span>Situação</span><strong id="aluno-situacao">Matriculado</strong></li>
+                        </ul>
+                    </article>
+
+                    <!-- Ações do cartão: botões que o JS vai usar -->
+                    <div class="cartao-acoes">
+                        <p>Personalize o seu cartão:</p>
+                        <!-- Vai pedir o nome com prompt e atualizar o cartão -->
+                        <button type="button" class="btn btn-primario" id="btn-alterar-nome">Alterar nome</button>
+                        <!-- Vai mostrar um resumo dos dados do aluno -->
+                        <button type="button" class="btn btn-contorno" id="btn-mostrar-dados">Mostrar dados</button>
+                        <!-- Parágrafo onde aparece a mensagem das ações -->
+                        <p class="cartao-mensagem" id="cartao-mensagem"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção "Quadro de horários" com tabela -->
+        <section class="secao" id="horarios">
+            <div class="container">
+                <h2>Quadro de horários</h2>
+                <p class="secao-descricao">Aulas da semana. O botão destaca o dia escolhido na tabela.</p>
+
+                <!-- Botões para destacar um dia da semana (ação adicionada no JS) -->
+                <div class="horarios-filtros">
+                    <button type="button" class="btn-filtro" id="btn-dia-seg">Segunda</button>
+                    <button type="button" class="btn-filtro" id="btn-dia-ter">Terça</button>
+                    <button type="button" class="btn-filtro" id="btn-dia-qua">Quarta</button>
+                    <button type="button" class="btn-filtro" id="btn-dia-qui">Quinta</button>
+                    <button type="button" class="btn-filtro" id="btn-dia-sex">Sexta</button>
+                </div>
+
+                <!-- Div com rolagem horizontal para a tabela não quebrar no celular -->
+                <div class="tabela-container">
+                    <table class="tabela-horarios" id="tabela-horarios">
+                        <!-- Cabeçalho da tabela com os dias da semana -->
+                        <thead>
+                            <tr>
+                                <th>Horário</th>
+                                <th class="col-seg">Segunda</th>
+                                <th class="col-ter">Terça</th>
+                                <th class="col-qua">Quarta</th>
+                                <th class="col-qui">Quinta</th>
+                                <th class="col-sex">Sexta</th>
+                            </tr>
+                        </thead>
+                        <!-- Corpo da tabela: cada linha é um horário -->
+                        <tbody>
+                            <tr>
+                                <th>19:00 - 20:40</th>
+                                <td class="col-seg">Web Design</td>
+                                <td class="col-ter">Algoritmos</td>
+                                <td class="col-qua">Banco de Dados</td>
+                                <td class="col-qui">Web Design</td>
+                                <td class="col-sex">Eng. de Software</td>
+                            </tr>
+                            <tr class="linha-intervalo">
+                                <th>20:40 - 21:00</th>
+                                <td colspan="5">Intervalo</td>
+                            </tr>
+                            <tr>
+                                <th>21:00 - 22:40</th>
+                                <td class="col-seg">Algoritmos</td>
+                                <td class="col-ter">Banco de Dados</td>
+                                <td class="col-qua">Web Design</td>
+                                <td class="col-qui">Eng. de Software</td>
+                                <td class="col-sex">Atividades complementares</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Texto que o JS vai alterar ao escolher um dia -->
+                <p class="horarios-info" id="horarios-info">Escolha um dia para destacar as aulas.</p>
+            </div>
+        </section>
+
+        <!-- Seção "Lista de tarefas" -->
+        <section class="secao secao-alternada" id="tarefas">
+            <div class="container">
+                <h2>Lista de tarefas</h2>
+                <p class="secao-descricao">Anote as atividades do semestre e marque as que já foram concluídas.</p>
+
+                <!-- Caixa da lista de tarefas -->
+                <div class="tarefas">
+                    <!-- Flexbox: campo de texto e botão de adicionar na mesma linha -->
+                    <div class="tarefas-form">
+                        <label for="nova-tarefa" class="oculto">Nova tarefa</label>
+                        <input type="text" id="nova-tarefa" placeholder="Ex.: Entregar a Tarefa 08" maxlength="60">
+                        <button type="button" class="btn btn-primario" id="btn-adicionar-tarefa">Adicionar</button>
+                    </div>
+
+                    <!-- Botões para filtrar as tarefas (ação adicionada no JS) -->
+                    <div class="tarefas-filtros">
+                        <button type="button" class="btn-filtro ativo" id="filtro-todas">Todas</button>
+                        <button type="button" class="btn-filtro" id="filtro-pendentes">Pendentes</button>
+                        <button type="button" class="btn-filtro" id="filtro-concluidas">Concluídas</button>
+                    </div>
+
+                    <!-- Lista onde as tarefas aparecem; as novas serão criadas com createElement -->
+                    <ul class="lista-tarefas" id="lista-tarefas">
+                        <li class="tarefa">
+                            <span class="tarefa-texto">Estudar variáveis e tipos de dados</span>
+                            <button type="button" class="tarefa-remover" aria-label="Remover tarefa">&times;</button>
+                        </li>
+                        <li class="tarefa concluida">
+                            <span class="tarefa-texto">Montar o layout com Flexbox</span>
+                            <button type="button" class="tarefa-remover" aria-label="Remover tarefa">&times;</button>
+                        </li>
+                        <li class="tarefa">
+                            <span class="tarefa-texto">Revisar condicionais e laços de repetição</span>
+                            <button type="button" class="tarefa-remover" aria-label="Remover tarefa">&times;</button>
+                        </li>
+                        <li class="tarefa">
+                            <span class="tarefa-texto">Escrever o README do projeto</span>
+                            <button type="button" class="tarefa-remover" aria-label="Remover tarefa">&times;</button>
+                        </li>
+                    </ul>
+
+                    <!-- Resumo da lista (quantidade de tarefas), atualizado pelo JS -->
+                    <p class="tarefas-contador" id="contador-tarefas">4 tarefas, 1 concluída</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção "Tabuada" -->
+        <section class="secao" id="tabuada">
+            <div class="container">
+                <h2>Tabuada</h2>
+                <p class="secao-descricao">Digite um número e veja a tabuada de 1 a 10.</p>
+
+                <!-- Caixa da tabuada -->
+                <div class="tabuada">
+                    <!-- Flexbox: campo do número e botão na mesma linha -->
+                    <div class="tabuada-form">
+                        <label for="numero-tabuada">Número</label>
+                        <input type="number" id="numero-tabuada" placeholder="Ex.: 7">
+                        <button type="button" class="btn btn-primario" id="btn-tabuada">Gerar tabuada</button>
+                    </div>
+                    <!-- Lista onde o JS vai criar as linhas da tabuada com um laço de repetição -->
+                    <ul class="tabuada-resultado" id="resultado-tabuada">
+                        <li class="tabuada-vazia">A tabuada aparecerá aqui.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção "Depoimentos" -->
+        <section class="secao secao-alternada" id="depoimentos">
+            <div class="container">
+                <h2>Depoimentos</h2>
+                <p class="secao-descricao">O que os alunos dizem sobre o portal.</p>
+
+                <!-- Área dos depoimentos: só o que tem a classe .ativo aparece -->
+                <div class="depoimentos" id="lista-depoimentos">
+                    <article class="depoimento ativo">
+                        <p class="depoimento-texto">"A calculadora de média me ajudou a saber quanto eu precisava tirar na segunda prova."</p>
+                        <p class="depoimento-autor">Ana Souza <span>Engenharia de Computação</span></p>
+                    </article>
+                    <article class="depoimento">
+                        <p class="depoimento-texto">"Gosto do quadro de horários: consigo ver as aulas da semana rapidinho pelo celular."</p>
+                        <p class="depoimento-autor">Bruno Lima <span>Ciência da Computação</span></p>
+                    </article>
+                    <article class="depoimento">
+                        <p class="depoimento-texto">"A lista de tarefas virou meu jeito de organizar as entregas do semestre."</p>
+                        <p class="depoimento-autor">Carla Mendes <span>Engenharia de Software</span></p>
+                    </article>
+                    <article class="depoimento">
+                        <p class="depoimento-texto">"O modo escuro é ótimo para estudar à noite sem cansar a vista."</p>
+                        <p class="depoimento-autor">Diego Rocha <span>Sistemas de Informação</span></p>
+                    </article>
+                    <article class="depoimento">
+                        <p class="depoimento-texto">"Com a tabuada e a calculadora, revisar matemática ficou bem mais rápido."</p>
+                        <p class="depoimento-autor">Elisa Martins <span>Engenharia Elétrica</span></p>
+                    </article>
+                </div>
+
+                <!-- Botões para navegar entre os depoimentos (ação adicionada no JS) -->
+                <div class="depoimentos-controles">
+                    <button type="button" class="btn-seta" id="depoimento-anterior" aria-label="Depoimento anterior">&larr;</button>
+                    <span class="depoimentos-posicao" id="depoimento-posicao">1 / 5</span>
+                    <button type="button" class="btn-seta" id="depoimento-proximo" aria-label="Próximo depoimento">&rarr;</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção "Perguntas frequentes" (FAQ) -->
+        <section class="secao" id="faq">
+            <div class="container">
+                <h2>Perguntas frequentes</h2>
+                <p class="secao-descricao">Clique em uma pergunta para ver a resposta.</p>
+
+                <!-- Cada item tem uma pergunta (botão) e uma resposta escondida pelo CSS -->
+                <div class="faq">
+                    <div class="faq-item">
+                        <button type="button" class="faq-pergunta">O Portal do Estudante é um site real?</button>
+                        <p class="faq-resposta">Não. É um projeto fictício criado para praticar HTML, CSS e JavaScript na disciplina de Web Design.</p>
+                    </div>
+                    <div class="faq-item">
+                        <button type="button" class="faq-pergunta">Como a média é calculada?</button>
+                        <p class="faq-resposta">A calculadora soma as duas notas e divide por 2. Com média 7 ou mais o aluno é aprovado; com 9 ou mais, o resultado é excelente.</p>
+                    </div>
+                    <div class="faq-item">
+                        <button type="button" class="faq-pergunta">Minhas tarefas ficam salvas?</button>
+                        <p class="faq-resposta">Não. A lista funciona só enquanto a página está aberta; ao recarregar, ela volta ao estado inicial.</p>
+                    </div>
+                    <div class="faq-item">
+                        <button type="button" class="faq-pergunta">Posso usar o portal no celular?</button>
+                        <p class="faq-resposta">Sim. O layout é responsivo e se adapta a telas pequenas usando Flexbox e media queries.</p>
+                    </div>
+                    <div class="faq-item">
+                        <button type="button" class="faq-pergunta">Como ativo o modo escuro?</button>
+                        <p class="faq-resposta">Clique no botão "Modo escuro" no topo da página. Clique de novo para voltar ao modo claro.</p>
+                    </div>
+                    <div class="faq-item">
+                        <button type="button" class="faq-pergunta">Como funciona a tabuada?</button>
+                        <p class="faq-resposta">Digite um número e clique em "Gerar tabuada". O resultado mostra a multiplicação desse número de 1 a 10.</p>
+                    </div>
+                    <div class="faq-item">
+                        <button type="button" class="faq-pergunta">Para onde vai a mensagem do formulário?</button>
+                        <p class="faq-resposta">Como o site é fictício, a mensagem não é enviada de verdade: o formulário só confirma na tela que os dados foram preenchidos.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção "Fale conosco" com formulário de contato -->
+        <section class="secao secao-alternada" id="contato">
+            <div class="container">
+                <h2>Fale conosco</h2>
+                <p class="secao-descricao">Envie dúvidas ou sugestões sobre o portal.</p>
+
+                <!-- Formulário de contato (o envio será tratado pelo JS, sem recarregar a página) -->
+                <form class="formulario" id="form-contato">
+                    <!-- Flexbox: nome e e-mail lado a lado -->
+                    <div class="formulario-linha">
+                        <div class="campo">
+                            <label for="contato-nome">Nome</label>
+                            <input type="text" id="contato-nome" placeholder="Seu nome">
+                        </div>
+                        <div class="campo">
+                            <label for="contato-email">E-mail</label>
+                            <input type="email" id="contato-email" placeholder="seu@email.com">
+                        </div>
+                    </div>
+                    <!-- Lista de opções do assunto -->
+                    <div class="campo">
+                        <label for="contato-assunto">Assunto</label>
+                        <select id="contato-assunto">
+                            <option value="">Selecione um assunto</option>
+                            <option value="duvida">Dúvida</option>
+                            <option value="sugestao">Sugestão</option>
+                            <option value="problema">Problema no site</option>
+                        </select>
+                    </div>
+                    <!-- Mensagem com limite de caracteres e contador abaixo -->
+                    <div class="campo">
+                        <label for="contato-mensagem">Mensagem</label>
+                        <textarea id="contato-mensagem" rows="5" maxlength="300" placeholder="Escreva sua mensagem"></textarea>
+                        <!-- Contador de caracteres que o JS vai atualizar a cada tecla -->
+                        <span class="contador-caracteres" id="contador-caracteres">0 / 300</span>
+                    </div>
+                    <!-- Botão do tipo "button" para o JS controlar o envio -->
+                    <button type="button" class="btn btn-primario" id="btn-enviar">Enviar mensagem</button>
+                    <!-- Mensagem de retorno do envio (sucesso ou erro) -->
+                    <p class="formulario-retorno" id="form-retorno"></p>
+                </form>
             </div>
         </section>
 
     </main>
 
     <!-- ===== RODAPÉ ===== -->
-    <footer class="rodape" id="contato">
+    <footer class="rodape" id="rodape">
+        <!-- Flexbox: colunas do rodapé lado a lado -->
+        <div class="container rodape-colunas">
+            <!-- Coluna 1: sobre o portal -->
+            <div class="rodape-coluna">
+                <h3>Portal do Estudante</h3>
+                <p>Projeto fictício desenvolvido para a disciplina de Web Design da Facens.</p>
+            </div>
+            <!-- Coluna 2: links rápidos para as seções -->
+            <div class="rodape-coluna">
+                <h3>Links rápidos</h3>
+                <ul>
+                    <li><a href="#avisos">Mural de avisos</a></li>
+                    <li><a href="#calculadora">Calculadora de média</a></li>
+                    <li><a href="#horarios">Quadro de horários</a></li>
+                    <li><a href="#tarefas">Lista de tarefas</a></li>
+                    <li><a href="#tabuada">Tabuada</a></li>
+                    <li><a href="#faq">Perguntas frequentes</a></li>
+                </ul>
+            </div>
+            <!-- Coluna 3: contato -->
+            <div class="rodape-coluna">
+                <h3>Contato</h3>
+                <ul>
+                    <li>contato@portaldoestudante.com</li>
+                    <li>Sorocaba - SP</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Linha final com os direitos -->
         <div class="container rodape-conteudo">
-            <p>&copy; 2026 Portal do Estudante. Projeto fictício para a disciplina de Web Design.</p>
-            <p>Contato: contato@portaldoestudante.com</p>
+            <p>&copy; 2026 Portal do Estudante. Todos os direitos reservados.</p>
+            <p>Feito com HTML, CSS e JavaScript.</p>
         </div>
     </footer>
 
