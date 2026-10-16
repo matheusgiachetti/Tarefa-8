@@ -138,6 +138,13 @@ ol {
     color: #ffffff;
 }
 
+/* Botão transparente com borda branca (usado sobre o banner) */
+.btn-transparente {
+    background-color: transparent;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+}
+
 /* Esconde um elemento da tela, mas mantém para leitores de tela */
 .oculto {
     position: absolute;
@@ -228,6 +235,14 @@ ol {
 .banner p {
     font-size: 1.15rem;
     max-width: 600px;
+}
+
+/* Flexbox: botões do banner lado a lado, quebrando linha no celular */
+.banner-botoes {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
 /* ==========================================================
@@ -421,6 +436,60 @@ ol {
     border-radius: 20px;
     font-size: 0.85rem;
     font-weight: bold;
+}
+
+/* ----- Notas da turma ----- */
+
+/* Flexbox: botões de filtro centralizados */
+.notas-filtros {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* Flexbox: itens de nota lado a lado, quebrando linha */
+.lista-notas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* Cada aluno com sua nota */
+.nota-item {
+    flex: 1 1 180px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background-color: var(--cor-superficie);
+    border-radius: 8px;
+    border-left: 5px solid var(--cor-borda);
+    box-shadow: var(--sombra);
+    transition: transform 0.2s;
+}
+
+/* Item sobe um pouco ao passar o mouse */
+.nota-item:hover {
+    transform: translateY(-3px);
+}
+
+/* Borda verde para aprovados e vermelha para reprovados (classes do JS) */
+.nota-item.aprovado {
+    border-left-color: #16a34a;
+}
+
+.nota-item.reprovado {
+    border-left-color: #dc2626;
+}
+
+/* Resumo abaixo da lista */
+.notas-resumo {
+    text-align: center;
+    margin-top: 20px;
+    font-weight: bold;
+    color: var(--cor-texto-suave);
 }
 
 /* ----- Mural de avisos ----- */
@@ -724,6 +793,13 @@ ol {
 /* "×" fica vermelho ao passar o mouse */
 .tarefa-remover:hover {
     color: #dc2626;
+}
+
+/* Dica de uso abaixo da lista */
+.tarefas-dica {
+    margin-top: 12px;
+    font-size: 0.85rem;
+    color: var(--cor-texto-suave);
 }
 
 /* Resumo da quantidade de tarefas */

@@ -180,3 +180,443 @@ botaoCalcular.addEventListener("click", function () {
         resultadoMedia.classList.add("reprovado");
     }
 });
+
+/* ==========================================================
+   6. Lista de tarefas
+   ========================================================== */
+
+// Pega o campo de texto, o botão de adicionar, a lista e o contador
+const campoTarefa = document.getElementById("nova-tarefa");
+const botaoAdicionarTarefa = document.getElementById("btn-adicionar-tarefa");
+const listaTarefas = document.getElementById("lista-tarefas");
+const contadorTarefas = document.getElementById("contador-tarefas");
+
+// Array de objetos: cada tarefa tem um texto e se está concluída (boolean)
+let tarefas = [
+    { texto: "Estudar variáveis e tipos de dados", concluida: false },
+    { texto: "Montar o layout com Flexbox", concluida: true },
+    { texto: "Revisar condicionais e laços de repetição", concluida: false }
+];
+
+// Filtro escolhido no momento: "todas", "pendentes" ou "concluidas"
+let filtroTarefas = "todas";
+
+// Função que desenha a lista na tela a partir do array de tarefas
+function mostrarTarefas() {
+    // Apaga os itens antigos para desenhar a lista de novo
+    listaTarefas.innerHTML = "";
+
+    // Percorre cada tarefa do array (forEach recebe a tarefa e a posição dela)
+    tarefas.forEach(function (tarefa, posicao) {
+        // Pula as tarefas que não combinam com o filtro escolhido
+        if (filtroTarefas === "pendentes" && tarefa.concluida) {
+            return; // dentro do forEach, return passa para a próxima tarefa
+        }
+        if (filtroTarefas === "concluidas" && !tarefa.concluida) {
+            return;
+        }
+
+        // Cria o <li> da tarefa e adiciona a classe de estilo
+        const item = document.createElement("li");
+        item.classList.add("tarefa");
+
+        // Se a tarefa estiver concluída, adiciona a classe que deixa o texto riscado
+        if (tarefa.concluida) {
+            item.classList.add("concluida");
+        }
+
+        // Cria o texto da tarefa
+        const texto = document.createElement("span");
+        texto.classList.add("tarefa-texto");
+        texto.textContent = tarefa.texto;
+
+        // Clique no texto: inverte a situação (operador lógico ! = "não")
+        texto.addEventListener("click", function () {
+            tarefa.concluida = !tarefa.concluida;
+            mostrarTarefas(); // desenha a lista de novo com a mudança
+        });
+
+        // Cria o botão "×" de remover
+        const botaoRemover = document.createElement("button");
+        botaoRemover.classList.add("tarefa-remover");
+        botaoRemover.textContent = "×";
+
+        // Clique no "×": filter cria um novo array sem a tarefa desta posição
+        botaoRemover.addEventListener("click", function () {
+            tarefas = tarefas.filter(function (t, i) {
+                return i !== posicao;
+            });
+            mostrarTarefas();
+        });
+
+        // Coloca o texto e o botão dentro do <li> e o <li> dentro da lista
+        item.appendChild(texto);
+        item.appendChild(botaoRemover);
+        listaTarefas.appendChild(item);
+    });
+
+    // Se o filtro escondeu todas as tarefas, avisa na própria lista
+    if (listaTarefas.innerHTML === "" && tarefas.length > 0) {
+        listaTarefas.innerHTML = '<li class="tarefa">Nenhuma tarefa neste filtro.</li>';
+    }
+
+    // Conta as concluídas com filter e length
+    const concluidas = tarefas.filter((t) => t.concluida).length;
+
+    // Mostra o resumo; o ternário escolhe singular ou plural
+    if (tarefas.length === 0) {
+        contadorTarefas.textContent = "Nenhuma tarefa";
+    } else {
+        const palavra = tarefas.length === 1 ? "tarefa" : "tarefas";
+        contadorTarefas.textContent = `${tarefas.length} ${palavra}, ${concluidas} concluída(s)`;
+    }
+}
+
+// Ao clicar em "Adicionar", cria uma tarefa nova com o texto digitado
+botaoAdicionarTarefa.addEventListener("click", function () {
+    // .value pega o texto digitado no campo
+    const textoNovo = campoTarefa.value;
+
+    // Não deixa adicionar tarefa vazia
+    if (textoNovo === "") {
+        alert("Digite uma tarefa antes de adicionar.");
+        return;
+    }
+
+    // Adiciona um novo objeto no fim do array (a próxima posição livre é o length)
+    tarefas[tarefas.length] = { texto: textoNovo, concluida: false };
+
+    // Limpa o campo e desenha a lista de novo
+    campoTarefa.value = "";
+    mostrarTarefas();
+});
+
+// Pega os três botões de filtro da lista de tarefas
+const filtroTodas = document.getElementById("filtro-todas");
+const filtroPendentes = document.getElementById("filtro-pendentes");
+const filtroConcluidas = document.getElementById("filtro-concluidas");
+
+// Arrow function que troca o filtro: destaca o botão clicado e redesenha a lista
+const escolherFiltro = (botao, filtro) => {
+    // querySelectorAll pega todos os botões de filtro; tira o destaque de cada um
+    document.querySelectorAll(".tarefas-filtros .btn-filtro").forEach(function (b) {
+        b.classList.remove("ativo");
+    });
+    botao.classList.add("ativo");
+
+    filtroTarefas = filtro;
+    mostrarTarefas();
+};
+
+// Cada botão chama a função com o seu próprio filtro
+filtroTodas.addEventListener("click", () => escolherFiltro(filtroTodas, "todas"));
+filtroPendentes.addEventListener("click", () => escolherFiltro(filtroPendentes, "pendentes"));
+filtroConcluidas.addEventListener("click", () => escolherFiltro(filtroConcluidas, "concluidas"));
+
+// Desenha a lista inicial assim que a página carrega
+mostrarTarefas();
+
+/* ==========================================================
+   7. Notas da turma (array, forEach, filter e length)
+   ========================================================== */
+
+// Pega a lista, o resumo e os dois botões de filtro
+const listaNotas = document.getElementById("lista-notas");
+const resumoNotas = document.getElementById("resumo-notas");
+const botaoNotasTodas = document.getElementById("btn-notas-todas");
+const botaoNotasAprovadas = document.getElementById("btn-notas-aprovadas");
+
+// Array de objetos com o nome do aluno e a nota final
+const notasTurma = [
+    { nome: "Ana", nota: 9.5 },
+    { nome: "Bruno", nota: 6.0 },
+    { nome: "Carla", nota: 7.5 },
+    { nome: "Diego", nota: 4.5 },
+    { nome: "Elisa", nota: 8.0 },
+    { nome: "Felipe", nota: 6.5 },
+    { nome: "Gabriela", nota: 10 },
+    { nome: "Henrique", nota: 7.0 }
+];
+
+// Função que mostra na tela qualquer array de notas que receber
+function mostrarNotas(lista) {
+    // Limpa a lista antes de mostrar
+    listaNotas.innerHTML = "";
+
+    // forEach: cria um <li> para cada aluno do array
+    lista.forEach(function (alunoTurma) {
+        const item = document.createElement("li");
+        item.classList.add("nota-item");
+
+        // Classe de cor: verde se aprovado, vermelho se reprovado (ternário)
+        item.classList.add(alunoTurma.nota >= 7 ? "aprovado" : "reprovado");
+
+        // innerHTML para montar o nome e a nota em negrito
+        item.innerHTML = `<span>${alunoTurma.nome}</span><strong>${alunoTurma.nota}</strong>`;
+        listaNotas.appendChild(item);
+    });
+}
+
+// Função que calcula a média de um array de notas com um laço for
+function mediaDaTurma(lista) {
+    let soma = 0; // acumulador
+
+    for (let i = 0; i < lista.length; i++) {
+        soma += lista[i].nota; // acessa cada aluno pelo índice
+    }
+
+    // Evita divisão por zero se o array estiver vazio
+    return lista.length > 0 ? soma / lista.length : 0;
+}
+
+// Mostra a turma inteira e a média geral
+function mostrarTodasAsNotas() {
+    botaoNotasTodas.classList.add("ativo");
+    botaoNotasAprovadas.classList.remove("ativo");
+
+    mostrarNotas(notasTurma);
+    const media = mediaDaTurma(notasTurma);
+    resumoNotas.textContent = `${notasTurma.length} alunos na turma - média geral: ${media.toFixed(2)}`;
+}
+
+// Botão "Todas"
+botaoNotasTodas.addEventListener("click", mostrarTodasAsNotas);
+
+// Botão "Só aprovados": filter cria um novo array só com nota >= 7
+botaoNotasAprovadas.addEventListener("click", function () {
+    botaoNotasAprovadas.classList.add("ativo");
+    botaoNotasTodas.classList.remove("ativo");
+
+    const aprovados = notasTurma.filter((alunoTurma) => alunoTurma.nota >= 7);
+
+    mostrarNotas(aprovados);
+    // length informa quantos alunos ficaram depois do filtro
+    resumoNotas.textContent = `${aprovados.length} de ${notasTurma.length} alunos aprovados`;
+});
+
+// Mostra todas as notas ao carregar a página
+mostrarTodasAsNotas();
+
+/* ==========================================================
+   8. Cartão do aluno (objeto com método e this)
+   ========================================================== */
+
+// Objeto aluno com propriedades e métodos
+const aluno = {
+    nome: "Aluno Visitante",
+    idade: 19,
+    curso: "Engenharia de Computação",
+    ra: "000000",
+    semestre: 2,
+
+    // Método que monta uma frase de apresentação; this aponta para o próprio objeto
+    apresentar: function () {
+        return `Olá! Eu sou ${this.nome}, tenho ${this.idade} anos e curso ${this.curso} (${this.semestre}º semestre).`;
+    },
+
+    // Método que devolve a primeira letra do nome (para o avatar do cartão)
+    inicial: function () {
+        return this.nome.charAt(0);
+    }
+};
+
+// Pega os elementos do cartão que mostram os dados
+const cartaoNome = document.getElementById("aluno-nome");
+const cartaoInicial = document.getElementById("aluno-inicial");
+const cartaoIdade = document.getElementById("aluno-idade");
+const cartaoCurso = document.getElementById("aluno-curso");
+const cartaoRa = document.getElementById("aluno-ra");
+const cartaoSemestre = document.getElementById("aluno-semestre");
+const cartaoMensagem = document.getElementById("cartao-mensagem");
+
+// Função que copia os dados do objeto para o cartão na tela
+function atualizarCartao() {
+    cartaoNome.textContent = aluno.nome;
+    cartaoInicial.textContent = aluno.inicial();
+    cartaoIdade.textContent = `${aluno.idade} anos`;
+    cartaoCurso.textContent = aluno.curso;
+    cartaoRa.textContent = aluno.ra;
+    cartaoSemestre.textContent = `${aluno.semestre}º`;
+}
+
+// Botão "Mostrar dados": exibe na página o retorno do método apresentar()
+document.getElementById("btn-mostrar-dados").addEventListener("click", function () {
+    cartaoMensagem.textContent = aluno.apresentar();
+});
+
+// Botão "Alterar nome": pede o nome com prompt e atualiza o objeto e o cartão
+document.getElementById("btn-alterar-nome").addEventListener("click", function () {
+    const novoNome = prompt("Digite o seu nome:", aluno.nome);
+
+    // prompt devolve null se o usuário cancelar; também não aceita nome vazio
+    if (novoNome === null || novoNome === "") {
+        cartaoMensagem.textContent = "O nome não foi alterado.";
+        return;
+    }
+
+    // confirm pergunta antes de alterar (true = OK, false = Cancelar)
+    if (confirm(`Alterar o nome para "${novoNome}"?`)) {
+        aluno.nome = novoNome; // altera a propriedade do objeto
+        atualizarCartao();
+        cartaoMensagem.textContent = `Nome alterado para ${aluno.nome}.`;
+    }
+});
+
+// Preenche o cartão com os dados do objeto ao carregar a página
+atualizarCartao();
+
+/* ==========================================================
+   9. Tabuada (laço for)
+   ========================================================== */
+
+// Pega o campo do número, o botão e a lista do resultado
+const campoTabuada = document.getElementById("numero-tabuada");
+const botaoTabuada = document.getElementById("btn-tabuada");
+const resultadoTabuada = document.getElementById("resultado-tabuada");
+
+// Ao clicar em "Gerar tabuada", monta as 10 linhas
+botaoTabuada.addEventListener("click", function () {
+    // Limpa o resultado anterior
+    resultadoTabuada.innerHTML = "";
+
+    // Se o campo estiver vazio, mostra um aviso e para
+    if (campoTabuada.value === "") {
+        resultadoTabuada.innerHTML = '<li class="tabuada-vazia">Digite um número para gerar a tabuada.</li>';
+        return;
+    }
+
+    // Converte o texto do campo em número
+    const numero = Number(campoTabuada.value);
+
+    // Laço for: repete de 1 até 10, criando uma linha a cada volta
+    for (let i = 1; i <= 10; i++) {
+        const linha = document.createElement("li");
+        linha.textContent = `${numero} x ${i} = ${numero * i}`;
+        resultadoTabuada.appendChild(linha);
+    }
+});
+
+/* ==========================================================
+   10. Formulário de contato (validação e contador)
+   ========================================================== */
+
+// Pega os campos, o contador, o botão e o parágrafo de retorno
+const campoNome = document.getElementById("contato-nome");
+const campoEmail = document.getElementById("contato-email");
+const campoAssunto = document.getElementById("contato-assunto");
+const campoMensagem = document.getElementById("contato-mensagem");
+const contadorCaracteres = document.getElementById("contador-caracteres");
+const botaoEnviar = document.getElementById("btn-enviar");
+const retornoFormulario = document.getElementById("form-retorno");
+
+// Limite de caracteres da mensagem (o mesmo do maxlength no HTML)
+const limiteMensagem = 300;
+
+// Função que atualiza o contador "x / 300"
+function atualizarContador() {
+    const quantidade = campoMensagem.value.length;
+    contadorCaracteres.textContent = `${quantidade} / ${limiteMensagem}`;
+
+    // Perto do limite (90% ou mais), o contador fica vermelho
+    if (quantidade >= limiteMensagem * 0.9) {
+        contadorCaracteres.classList.add("limite");
+    } else {
+        contadorCaracteres.classList.remove("limite");
+    }
+}
+
+// Evento "input": dispara a cada letra digitada ou apagada
+campoMensagem.addEventListener("input", atualizarContador);
+
+// Função que verifica se o e-mail tem "@" e um "." depois dele, letra por letra
+function emailValido(email) {
+    let temArroba = false;
+    let temPonto = false;
+
+    for (let i = 0; i < email.length; i++) {
+        const letra = email.charAt(i);
+
+        // Espaço não é permitido em e-mail
+        if (letra === " ") {
+            return false;
+        }
+        // Achou o "@": marca e passa para a próxima letra
+        if (letra === "@") {
+            temArroba = true;
+            continue;
+        }
+        // Achou um "." depois do "@": já tem tudo, então sai do laço
+        if (letra === "." && temArroba) {
+            temPonto = true;
+            break;
+        }
+    }
+
+    // Válido só se tiver os dois (operador lógico &&)
+    return temArroba && temPonto;
+}
+
+// Função que mostra a mensagem de retorno com a cor certa
+function mostrarRetorno(texto, tipo) {
+    retornoFormulario.classList.remove("sucesso");
+    retornoFormulario.classList.remove("erro");
+    retornoFormulario.classList.add(tipo);
+    retornoFormulario.textContent = texto;
+}
+
+// Ao clicar em "Enviar mensagem", valida tudo antes de "enviar"
+botaoEnviar.addEventListener("click", function () {
+    const nome = campoNome.value;
+    const email = campoEmail.value;
+    const assunto = campoAssunto.value;
+    const mensagem = campoMensagem.value;
+
+    // Algum campo vazio? (operador lógico ||)
+    if (nome === "" || email === "" || assunto === "" || mensagem === "") {
+        mostrarRetorno("Preencha todos os campos antes de enviar.", "erro");
+    } else if (!emailValido(email)) {
+        mostrarRetorno("Digite um e-mail válido, como nome@email.com.", "erro");
+    } else if (mensagem.length < 10) {
+        mostrarRetorno("A mensagem precisa ter pelo menos 10 caracteres.", "erro");
+    } else {
+        // Tudo certo: mostra a confirmação (o site é fictício, nada é enviado)
+        mostrarRetorno(`Obrigado, ${nome}! Sua mensagem foi enviada.`, "sucesso");
+        console.log(`Mensagem de ${nome} (${email}) sobre "${assunto}": ${mensagem}`);
+
+        // Limpa os campos e zera o contador
+        campoNome.value = "";
+        campoEmail.value = "";
+        campoAssunto.value = "";
+        campoMensagem.value = "";
+        atualizarContador();
+    }
+});
+
+/* ==========================================================
+   11. Alterar o texto de boas-vindas com botão (JS + DOM)
+   ========================================================== */
+
+// Pega o parágrafo do banner e o botão que troca a mensagem
+const mensagemBoasVindas = document.getElementById("mensagem-boas-vindas");
+const botaoTrocarMensagem = document.getElementById("btn-trocar-mensagem");
+
+// Array com as mensagens que vão se revezar
+const mensagens = [
+    "Organize seus estudos, acompanhe suas notas e conheça as disciplinas do semestre.",
+    "Bons estudos! Cada aula conta para a sua aprovação.",
+    "Não esqueça de conferir o quadro de horários desta semana.",
+    "Dica: use a lista de tarefas para não perder nenhuma entrega.",
+    "Programar é praticar: teste o código no console sempre que puder!"
+];
+
+// Posição da mensagem que está na tela agora
+let mensagemAtual = 0;
+
+// A cada clique, mostra a próxima mensagem do array
+botaoTrocarMensagem.addEventListener("click", function () {
+    // Avança uma posição; o % (resto da divisão) volta para 0 depois da última
+    mensagemAtual = (mensagemAtual + 1) % mensagens.length;
+
+    // textContent troca o texto do parágrafo na tela
+    mensagemBoasVindas.textContent = mensagens[mensagemAtual];
+});

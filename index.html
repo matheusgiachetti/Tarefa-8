@@ -25,6 +25,7 @@
                     <li><a href="#sobre">Sobre</a></li>
                     <li><a href="#avisos">Avisos</a></li>
                     <li><a href="#calculadora">Calculadora</a></li>
+                    <li><a href="#notas">Notas</a></li>
                     <li><a href="#disciplinas">Disciplinas</a></li>
                     <li><a href="#cartao">Cartão</a></li>
                     <li><a href="#horarios">Horários</a></li>
@@ -48,9 +49,15 @@
             <div class="container banner-conteudo">
                 <!-- O span fica vazio: o texto será escrito pelo efeito de digitação no JS -->
                 <h1><span id="typewriter"></span></h1>
-                <p>Organize seus estudos, acompanhe suas notas e conheça as disciplinas do semestre.</p>
-                <!-- Botão que vai abrir o pop-up (modal) -->
-                <button type="button" class="btn btn-claro" id="open-modal">Saiba mais</button>
+                <!-- Mensagem de boas-vindas que o JS troca ao clicar no botão -->
+                <p id="mensagem-boas-vindas">Organize seus estudos, acompanhe suas notas e conheça as disciplinas do semestre.</p>
+                <!-- Flexbox: botões do banner lado a lado -->
+                <div class="banner-botoes">
+                    <!-- Botão que vai abrir o pop-up (modal) -->
+                    <button type="button" class="btn btn-claro" id="open-modal">Saiba mais</button>
+                    <!-- Botão que vai trocar a mensagem de boas-vindas -->
+                    <button type="button" class="btn btn-transparente" id="btn-trocar-mensagem">Nova mensagem</button>
+                </div>
             </div>
         </section>
 
@@ -146,6 +153,26 @@
             </div>
         </section>
 
+        <!-- Seção "Notas da turma" -->
+        <section class="secao" id="notas">
+            <div class="container">
+                <h2>Notas da turma</h2>
+                <p class="secao-descricao">Médias finais da turma de Web Design. Use os botões para filtrar.</p>
+
+                <!-- Botões de filtro das notas (ação adicionada no JS) -->
+                <div class="notas-filtros">
+                    <button type="button" class="btn-filtro ativo" id="btn-notas-todas">Todas</button>
+                    <button type="button" class="btn-filtro" id="btn-notas-aprovadas">Só aprovados (&ge; 7)</button>
+                </div>
+
+                <!-- Lista vazia: o JS cria um item para cada nota do array com forEach -->
+                <ul class="lista-notas" id="lista-notas"></ul>
+
+                <!-- Resumo com a quantidade de alunos exibidos (length) -->
+                <p class="notas-resumo" id="resumo-notas"></p>
+            </div>
+        </section>
+
         <!-- Seção "Disciplinas" com cards -->
         <section class="secao" id="disciplinas">
             <div class="container">
@@ -209,6 +236,7 @@
                         <!-- Lista de dados do aluno (rótulo e valor) -->
                         <ul class="cartao-dados">
                             <li><span>RA</span><strong id="aluno-ra">000000</strong></li>
+                            <li><span>Idade</span><strong id="aluno-idade">19 anos</strong></li>
                             <li><span>Curso</span><strong id="aluno-curso">Engenharia de Computação</strong></li>
                             <li><span>Semestre</span><strong id="aluno-semestre">2º</strong></li>
                             <li><span>Turno</span><strong id="aluno-turno">Noturno</strong></li>
@@ -313,27 +341,15 @@
                     </div>
 
                     <!-- Lista onde as tarefas aparecem; as novas serão criadas com createElement -->
-                    <ul class="lista-tarefas" id="lista-tarefas">
-                        <li class="tarefa">
-                            <span class="tarefa-texto">Estudar variáveis e tipos de dados</span>
-                            <button type="button" class="tarefa-remover" aria-label="Remover tarefa">&times;</button>
-                        </li>
-                        <li class="tarefa concluida">
-                            <span class="tarefa-texto">Montar o layout com Flexbox</span>
-                            <button type="button" class="tarefa-remover" aria-label="Remover tarefa">&times;</button>
-                        </li>
-                        <li class="tarefa">
-                            <span class="tarefa-texto">Revisar condicionais e laços de repetição</span>
-                            <button type="button" class="tarefa-remover" aria-label="Remover tarefa">&times;</button>
-                        </li>
-                        <li class="tarefa">
-                            <span class="tarefa-texto">Escrever o README do projeto</span>
-                            <button type="button" class="tarefa-remover" aria-label="Remover tarefa">&times;</button>
-                        </li>
-                    </ul>
+                    <!-- Lista vazia: os itens são criados pelo JS (createElement + appendChild)
+                         a partir de um array de tarefas -->
+                    <ul class="lista-tarefas" id="lista-tarefas"></ul>
+
+                    <!-- Dica de uso da lista -->
+                    <p class="tarefas-dica">Clique no texto para marcar como concluída e no &times; para remover.</p>
 
                     <!-- Resumo da lista (quantidade de tarefas), atualizado pelo JS -->
-                    <p class="tarefas-contador" id="contador-tarefas">4 tarefas, 1 concluída</p>
+                    <p class="tarefas-contador" id="contador-tarefas">Nenhuma tarefa</p>
                 </div>
             </div>
         </section>
