@@ -302,6 +302,23 @@ ol {
     text-align: center;
 }
 
+/* Cores do resultado, adicionadas pelo JS com classList conforme a situação */
+.resultado.excelente {
+    color: #2563eb; /* azul */
+}
+
+.resultado.aprovado {
+    color: #16a34a; /* verde */
+}
+
+.resultado.reprovado {
+    color: #dc2626; /* vermelho */
+}
+
+.resultado.aviso {
+    color: #d97706; /* laranja */
+}
+
 /* ----- Disciplinas ----- */
 
 /* Flexbox: cards lado a lado com quebra de linha */
