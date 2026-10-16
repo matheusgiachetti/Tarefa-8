@@ -1,0 +1,9 @@
+CLAUDE.md
+.claude/
+.vscode/
+prints/
+*.docx
+~$*.docx
+Thumbs.db
+desktop.ini
+.DS_Store
