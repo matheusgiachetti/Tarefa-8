@@ -1,21 +1,22 @@
 # Portal do Estudante
 
 Site fictício de um portal acadêmico, criado na **Tarefa 08** da disciplina de **Web Design** (Facens).
-A página reúne informações sobre o portal, uma calculadora de média e os cards das disciplinas do semestre.
+A página reúne um mural de avisos, calculadora de média, notas da turma, disciplinas, cartão do aluno, quadro de horários, lista de tarefas, tabuada, depoimentos, perguntas frequentes e um formulário de contato.
 Toda a interatividade é feita com **JavaScript puro**, aplicando os conteúdos da aula **"JS: Sintaxe, Variáveis e Estruturas"**.
 
 ## Objetivo da atividade
 
 - Praticar a sintaxe básica do JavaScript: variáveis, tipos de dados, operadores e estruturas de controle.
-- Manipular o DOM para deixar a página interativa (eventos, textos e classes CSS).
+- Manipular o DOM para deixar a página interativa (eventos, textos, classes CSS e criação de elementos).
 - Recriar os exemplos vistos em aula: dark mode, botão voltar ao topo, efeito de digitação, pop-up (modal) e alterar texto com botão.
+- Usar arrays, objetos e laços de repetição em funcionalidades reais da página.
 - Manter o JavaScript em um arquivo externo, separado do HTML e do CSS.
 - Aproveitar o layout com Flexbox e a responsividade estudados na aula anterior.
 
 ## Tecnologias
 
-- **HTML5**: estrutura da página com tags semânticas (`header`, `nav`, `main`, `section`, `article`, `footer`).
-- **CSS3**: variáveis de cor no `:root`, Flexbox, transições e `@media` para celular.
+- **HTML5**: estrutura da página com tags semânticas (`header`, `nav`, `main`, `section`, `article`, `footer`), tabela e formulário.
+- **CSS3**: variáveis de cor no `:root`, Flexbox, `hover`, `transition` e `@media` para celular.
 - **JavaScript (ES6)**: puro, sem frameworks, bibliotecas ou CDN.
 - **Git e GitHub**: versionamento com um commit por etapa.
 
@@ -55,42 +56,31 @@ Não há JavaScript inline nem atributos `onclick` no HTML: todos os eventos sã
 **Conceitos de JS:** `const`, `getElementById`, `addEventListener`, `classList.toggle`, operador ternário e `textContent`.
 
 ```js
-botaoDark.addEventListener("click", function () {
-    document.body.classList.toggle("dark");
-    const modoEscuroAtivo = document.body.classList.contains("dark");
-    botaoDark.textContent = modoEscuroAtivo ? "Modo claro" : "Modo escuro";
-});
+document.body.classList.toggle("dark");
+const modoEscuroAtivo = document.body.classList.contains("dark");
+botaoDark.textContent = modoEscuroAtivo ? "Modo claro" : "Modo escuro";
 ```
 
 ### 2. Botão voltar ao topo
 
-**O que faz:** um botão redondo com uma seta aparece no canto inferior direito depois que a página é rolada mais de 200 pixels. Ao clicar nele, a página volta ao topo com animação suave.
+**O que faz:** um botão redondo com uma seta aparece no canto inferior direito depois que a página é rolada mais de 200 pixels. Ao clicar, a página volta ao topo com animação suave.
 
-**Como funciona:** o botão começa escondido pelo CSS (`opacity: 0` e `visibility: hidden`). O JS adiciona ou remove a classe `.visivel` conforme a rolagem.
-
-**Conceitos de JS:** evento `scroll`, `window.scrollY`, operador de comparação `>`, `if/else`, `classList.add/remove` e `window.scrollTo` com um objeto de opções.
+**Conceitos de JS:** evento `scroll`, `window.scrollY`, comparação `>`, `if/else`, `classList.add/remove` e `window.scrollTo` com um objeto de opções.
 
 ```js
-window.addEventListener("scroll", function () {
-    if (window.scrollY > 200) {
-        botaoTopo.classList.add("visivel");
-    } else {
-        botaoTopo.classList.remove("visivel");
-    }
-});
-
-botaoTopo.addEventListener("click", function () {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-});
+if (window.scrollY > 200) {
+    botaoTopo.classList.add("visivel");
+} else {
+    botaoTopo.classList.remove("visivel");
+}
+window.scrollTo({ top: 0, behavior: "smooth" });
 ```
 
 ### 3. Efeito de digitação (typewriter)
 
-**O que faz:** o título do banner é escrito letra por letra ao abrir a página: "Bem-vindo ao Portal do Estudante!".
+**O que faz:** o título do banner é escrito letra por letra ao abrir a página.
 
-**Como funciona:** a função `digitar()` adiciona uma letra ao `span#typewriter`, avança o índice e agenda a si mesma com `setTimeout`, repetindo até chegar ao fim do texto.
-
-**Conceitos de JS:** `let` (o índice muda), `length` da string, `charAt`, operador de atribuição `+=`, incremento `index++`, `if` e `setTimeout`.
+**Conceitos de JS:** `let` (o índice muda), `length`, `charAt`, `+=`, `index++`, `if` e `setTimeout`.
 
 ```js
 function digitar() {
@@ -104,11 +94,9 @@ function digitar() {
 
 ### 4. Pop-up (modal)
 
-**O que faz:** o botão "Saiba mais" do banner abre uma janela de boas-vindas sobre um fundo escuro. Ela fecha pelo botão "×" ou ao clicar fora da caixa.
+**O que faz:** o botão "Saiba mais" abre uma janela de boas-vindas. Ela fecha pelo botão "×" ou ao clicar fora da caixa.
 
-**Como funciona:** o modal começa com `display: none` no CSS. A classe `.aberto` troca para `display: flex`, o que também centraliza a caixa na tela.
-
-**Conceitos de JS:** `addEventListener`, `classList.add/remove`, o objeto do evento (`e.target`) e o operador de igualdade estrita `===`.
+**Conceitos de JS:** `addEventListener`, `classList.add/remove`, objeto do evento (`e.target`) e igualdade estrita `===`.
 
 ```js
 modal.addEventListener("click", function (e) {
@@ -118,9 +106,9 @@ modal.addEventListener("click", function (e) {
 });
 ```
 
-### 5. Calculadora de média (alterar texto com botão)
+### 5. Calculadora de média
 
-**O que faz:** o usuário digita duas notas e clica em "Calcular". O parágrafo de resultado mostra a média e a situação, com uma cor diferente para cada caso:
+**O que faz:** lê duas notas, mostra a média e a situação com uma cor diferente para cada caso. Avisa se algum campo estiver vazio ou se a nota estiver fora de 0 a 10.
 
 | Média        | Situação  | Cor      |
 |--------------|-----------|----------|
@@ -128,52 +116,140 @@ modal.addEventListener("click", function (e) {
 | de 7 a 8,99  | Aprovado  | verde    |
 | menor que 7  | Reprovado | vermelho |
 
-Se algum campo estiver vazio, ou uma nota estiver fora de 0 a 10, aparece um aviso em laranja.
-
-**Conceitos de JS:** `.value`, conversão com `Number()`, `typeof`, operadores aritméticos (`+` e `/`), operadores lógicos (`||`), `function` com `return`, arrow function, `if / else if / else`, template string, `textContent` e `classList`.
+**Conceitos de JS:** `.value`, `Number()`, `typeof`, operadores aritméticos, `||`, `function` com `return`, arrow function, `if / else if / else`, template string e `classList`.
 
 ```js
 function calcularMedia(nota1, nota2) {
     return (nota1 + nota2) / 2;
 }
+```
 
-const classificar = (media) => {
-    if (media >= 9) {
-        return "Excelente";
-    } else if (media >= 7) {
-        return "Aprovado";
-    } else {
-        return "Reprovado";
+### 6. Lista de tarefas
+
+**O que faz:** o usuário digita uma tarefa e clica em "Adicionar". Clicar no texto marca a tarefa como concluída (texto riscado) e clicar no "×" remove o item. Os filtros mostram todas, só as pendentes ou só as concluídas, e um contador resume a lista.
+
+**Como funciona:** as tarefas ficam em um **array de objetos** (`{ texto, concluida }`). A função `mostrarTarefas()` limpa a lista com `innerHTML = ""` e cria cada item de novo com `createElement` e `appendChild`. Remover uma tarefa é criar um novo array sem ela, usando `filter`.
+
+**Conceitos de JS:** array de objetos, `forEach`, `filter`, `length`, `createElement`, `appendChild`, `.value`, operador lógico `!`, `alert`, `querySelectorAll` e arrow functions.
+
+```js
+const item = document.createElement("li");
+item.classList.add("tarefa");
+item.appendChild(texto);
+item.appendChild(botaoRemover);
+listaTarefas.appendChild(item);
+
+tarefas = tarefas.filter(function (t, i) {
+    return i !== posicao;
+});
+```
+
+### 7. Notas da turma
+
+**O que faz:** mostra as notas de 8 alunos (borda verde para aprovados e vermelha para reprovados) com a média geral. O botão "Só aprovados" exibe apenas quem tirou 7 ou mais e informa quantos são.
+
+**Conceitos de JS:** array, `forEach` para exibir, `filter` para selecionar os aprovados, `length` para contar, laço `for` com acumulador para a média e ternário para a cor.
+
+```js
+const aprovados = notasTurma.filter((alunoTurma) => alunoTurma.nota >= 7);
+mostrarNotas(aprovados);
+resumoNotas.textContent = `${aprovados.length} de ${notasTurma.length} alunos aprovados`;
+```
+
+### 8. Cartão do aluno
+
+**O que faz:** uma carteirinha digital mostra os dados de um objeto `aluno`. "Mostrar dados" exibe uma frase de apresentação e "Alterar nome" pede um novo nome com `prompt`, confirma com `confirm` e atualiza o cartão (inclusive a inicial do avatar).
+
+**Conceitos de JS:** objeto com propriedades e métodos, `this`, template string, `prompt`, `confirm`, `null` e `textContent`.
+
+```js
+const aluno = {
+    nome: "Aluno Visitante",
+    idade: 19,
+    curso: "Engenharia de Computação",
+    apresentar: function () {
+        return `Olá! Eu sou ${this.nome}, tenho ${this.idade} anos e curso ${this.curso}.`;
     }
 };
 ```
 
+### 9. Tabuada
+
+**O que faz:** o usuário digita um número e a tabuada de 1 a 10 aparece na tela, em duas colunas.
+
+**Conceitos de JS:** laço `for`, `Number()`, operador `*`, template string, `createElement` e `appendChild`.
+
+```js
+for (let i = 1; i <= 10; i++) {
+    const linha = document.createElement("li");
+    linha.textContent = `${numero} x ${i} = ${numero * i}`;
+    resultadoTabuada.appendChild(linha);
+}
+```
+
+### 10. Formulário de contato
+
+**O que faz:** valida nome, e-mail, assunto e mensagem antes de "enviar". Mostra a mensagem de erro ou de sucesso em vermelho ou verde, limpa os campos após o envio e tem um contador de caracteres que fica vermelho perto do limite de 300.
+
+**Como funciona:** o e-mail é conferido letra por letra com um laço `for`: `continue` pula para a próxima letra ao achar o "@" e `break` encerra o laço ao achar um "." depois dele.
+
+**Conceitos de JS:** `if / else if / else`, operadores lógicos `||`, `&&` e `!`, evento `input`, `length`, `for`, `break`, `continue` e `textContent`.
+
+```js
+campoMensagem.addEventListener("input", atualizarContador);
+
+if (nome === "" || email === "" || assunto === "" || mensagem === "") {
+    mostrarRetorno("Preencha todos os campos antes de enviar.", "erro");
+}
+```
+
+### 11. Alterar o texto de boas-vindas
+
+**O que faz:** o botão "Nova mensagem" do banner troca o texto de boas-vindas, passando por 5 mensagens e voltando à primeira.
+
+**Conceitos de JS:** array, índice, operador `%` (resto da divisão) e `textContent` (exemplo JS + DOM da aula).
+
+```js
+mensagemAtual = (mensagemAtual + 1) % mensagens.length;
+mensagemBoasVindas.textContent = mensagens[mensagemAtual];
+```
+
 ## Conceitos da aula aplicados
 
-- **Variáveis:** `const` para valores que não mudam (elementos do DOM, textos, velocidade) e `let` para o índice da digitação, que é incrementado.
-- **Tipos de dados:** strings (textos), numbers (notas e médias), booleans (`modoEscuroAtivo`) e objetos. O `typeof` mostra no console que `.value` é `"string"` e, depois do `Number()`, vira `"number"`.
-- **Operadores aritméticos:** `+` e `/` no cálculo da média.
-- **Operadores de comparação:** `>`, `>=`, `<` e `===` (scroll, classificação, validação e clique fora do modal).
-- **Operadores lógicos:** `||` para verificar se algum campo está vazio ou alguma nota está fora do intervalo.
-- **Operadores de atribuição:** `=`, `+=` (adiciona letra ao título) e `++` (avança o índice).
+- **Variáveis:** `const` para valores fixos (elementos do DOM, arrays, o objeto `aluno`) e `let` para o que muda (índices, lista de tarefas, filtro atual, acumulador da média).
+- **Tipos de dados:** string, number, boolean (`concluida`, `temArroba`), `null` (retorno do `prompt` cancelado), arrays e objetos. O `typeof` mostra no console que `.value` é `"string"` e, depois do `Number()`, vira `"number"`.
+- **Operadores aritméticos:** `+`, `/`, `*` e `%` (média, tabuada e rodízio das mensagens).
+- **Operadores de comparação:** `>`, `>=`, `<`, `<=`, `===` e `!==`.
+- **Operadores lógicos:** `||` (algum campo vazio), `&&` (e-mail com "@" e ".") e `!` (inverter a tarefa concluída).
+- **Operadores de atribuição:** `=`, `+=` e `++`.
 - **Condicionais:** `if/else`, `if / else if / else` e o operador ternário.
-- **Repetição:** o efeito de digitação repete a mesma ação letra por letra até o fim do texto, controlado pela condição `index < textoDigitacao.length` (o mesmo papel de um laço `while`, mas com uma pausa entre as repetições via `setTimeout`).
-- **Funções:** declaração com `function`, arrow function, parâmetros, `return` e funções anônimas como callback dos eventos.
-- **Strings como sequência indexada:** `length` e `charAt(index)` percorrem o texto pela posição, assim como se faz com o índice de um array.
-- **Objetos:** `document`, `window` e o evento `e` são objetos com propriedades e métodos; `{ top: 0, behavior: "smooth" }` é um objeto literal passado para `scrollTo`.
-- **DOM:** `getElementById`, `addEventListener`, `textContent`, `value` e `classList`.
-- **Console:** `console.log` para testar a ligação do script e conferir os tipos.
+- **Repetição:** laços `for` na tabuada, na média da turma e na validação do e-mail, com `break` e `continue`.
+- **Funções:** declaração com `function`, arrow function, parâmetros, `return` e funções como callback dos eventos.
+- **Arrays:** índice, `length`, `forEach` e `filter` (tarefas, notas e mensagens).
+- **Objetos:** o objeto `aluno` com propriedades, métodos e `this`, e os objetos das tarefas e das notas.
+- **Caixas de diálogo:** `alert` (tarefa vazia), `prompt` e `confirm` (alterar nome).
+- **DOM:** `getElementById`, `querySelector`, `querySelectorAll`, `addEventListener`, `textContent`, `innerHTML`, `value`, `classList`, `createElement` e `appendChild`.
+- **Tempo e rolagem:** `setTimeout`, `window.scrollY` e `window.scrollTo`.
 
 ## Responsividade
 
-- O layout usa **Flexbox** no cabeçalho, no banner, nas seções, na calculadora, nos cards e no rodapé.
-- Os cards usam `flex-wrap: wrap` com largura base, então se reorganizam sozinhos conforme o tamanho da tela.
-- Em telas de até **768px** (`@media (max-width: 768px)`):
-  - o cabeçalho fica em coluna, com o menu centralizado e quebrando linha;
-  - o banner e as seções ganham menos espaçamento, e os títulos ficam menores;
-  - os dois campos de nota ficam um embaixo do outro;
-  - o rodapé fica centralizado em coluna.
-- O `meta viewport` no `head` garante que o celular use a largura real da tela.
+- O layout usa **Flexbox** em todas as seções: cabeçalho, banner, cards, notas, cartão, tarefas, tabuada, depoimentos, FAQ, formulário e rodapé.
+- Cards, notas e colunas do rodapé usam `flex-wrap: wrap` com largura base e se reorganizam sozinhos.
+- A tabela de horários fica dentro de uma área com rolagem horizontal para não quebrar o layout no celular.
+- Em telas de até **768px**: cabeçalho, avisos, formulários e rodapé ficam em coluna, a tabuada passa para uma coluna e os espaçamentos diminuem.
+- Em telas de até **400px**: o título do banner diminui mais e os dados do cartão ficam um embaixo do outro.
+
+## Melhorias
+
+Além dos exemplos da aula, o projeto recebeu estas melhorias:
+
+- **Novas seções:** mural de avisos, notas da turma, cartão do aluno, quadro de horários, lista de tarefas, tabuada, depoimentos, perguntas frequentes e formulário de contato.
+- **Visual:** `hover` e `transition` em botões, cards, links e itens de lista; cartão do aluno em degradê; rodapé em três colunas.
+- **Modo escuro completo:** todas as seções novas usam as mesmas variáveis de cor, então também mudam de tema.
+- **Validações:** avisos para campos vazios, notas fora de 0 a 10, e-mail inválido e mensagem curta.
+- **Revisão do código:** todo o HTML, CSS e JS comentado em português; console limpo, sem erros, e todos os ids usados no JS conferidos no HTML.
+
+Próximas melhorias possíveis: dar ação aos botões dos depoimentos, às perguntas frequentes, aos filtros de dia do quadro de horários e ao mural de avisos (o HTML e o CSS já estão preparados).
 
 ## Autor
 

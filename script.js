@@ -371,11 +371,15 @@ function mediaDaTurma(lista) {
 
 // Mostra a turma inteira e a média geral
 function mostrarTodasAsNotas() {
+    // Destaca o botão "Todas" e tira o destaque do outro
     botaoNotasTodas.classList.add("ativo");
     botaoNotasAprovadas.classList.remove("ativo");
 
+    // Mostra o array completo e calcula a média geral
     mostrarNotas(notasTurma);
     const media = mediaDaTurma(notasTurma);
+
+    // Resumo com a quantidade (length) e a média com 2 casas decimais
     resumoNotas.textContent = `${notasTurma.length} alunos na turma - média geral: ${media.toFixed(2)}`;
 }
 
@@ -384,11 +388,14 @@ botaoNotasTodas.addEventListener("click", mostrarTodasAsNotas);
 
 // Botão "Só aprovados": filter cria um novo array só com nota >= 7
 botaoNotasAprovadas.addEventListener("click", function () {
+    // Destaca o botão "Só aprovados" e tira o destaque do outro
     botaoNotasAprovadas.classList.add("ativo");
     botaoNotasTodas.classList.remove("ativo");
 
+    // Arrow function no filter: fica só quem tem nota maior ou igual a 7
     const aprovados = notasTurma.filter((alunoTurma) => alunoTurma.nota >= 7);
 
+    // Mostra só o array filtrado
     mostrarNotas(aprovados);
     // length informa quantos alunos ficaram depois do filtro
     resumoNotas.textContent = `${aprovados.length} de ${notasTurma.length} alunos aprovados`;
@@ -581,7 +588,6 @@ botaoEnviar.addEventListener("click", function () {
     } else {
         // Tudo certo: mostra a confirmação (o site é fictício, nada é enviado)
         mostrarRetorno(`Obrigado, ${nome}! Sua mensagem foi enviada.`, "sucesso");
-        console.log(`Mensagem de ${nome} (${email}) sobre "${assunto}": ${mensagem}`);
 
         // Limpa os campos e zera o contador
         campoNome.value = "";

@@ -378,14 +378,17 @@ ol {
     color: #2563eb; /* azul */
 }
 
+/* Aprovado: verde */
 .resultado.aprovado {
     color: #16a34a; /* verde */
 }
 
+/* Reprovado: vermelho */
 .resultado.reprovado {
     color: #dc2626; /* vermelho */
 }
 
+/* Aviso (campo vazio ou nota inválida): laranja */
 .resultado.aviso {
     color: #d97706; /* laranja */
 }
@@ -480,6 +483,7 @@ ol {
     border-left-color: #16a34a;
 }
 
+/* Reprovado: borda vermelha */
 .nota-item.reprovado {
     border-left-color: #dc2626;
 }
@@ -737,6 +741,7 @@ ol {
     margin-bottom: 15px;
 }
 
+/* O campo de texto cresce e ocupa o espaço que sobra ao lado do botão */
 .tarefas-form input {
     flex: 1;
 }
@@ -830,10 +835,12 @@ ol {
     margin-bottom: 20px;
 }
 
+/* Rótulo "Número" em negrito */
 .tabuada-form label {
     font-weight: bold;
 }
 
+/* O campo do número ocupa o espaço entre o rótulo e o botão */
 .tabuada-form input {
     flex: 1;
 }
@@ -1047,6 +1054,7 @@ ol {
     color: #16a34a;
 }
 
+/* Erro de validação: vermelho */
 .formulario-retorno.erro {
     color: #dc2626;
 }
@@ -1055,6 +1063,7 @@ ol {
    Rodapé
    ========================================================== */
 
+/* Fundo azul e texto branco no rodapé */
 .rodape {
     background-color: var(--cor-primaria);
     color: #ffffff;
@@ -1091,6 +1100,7 @@ ol {
     transition: opacity 0.2s;
 }
 
+/* Link com o mouse por cima: opaco e sublinhado */
 .rodape-coluna a:hover {
     opacity: 1;
     text-decoration: underline;
@@ -1212,6 +1222,7 @@ ol {
         padding: 60px 0;
     }
 
+    /* Título do banner menor para caber na tela */
     .banner h1 {
         font-size: 1.8rem;
     }
@@ -1221,6 +1232,7 @@ ol {
         padding: 50px 0;
     }
 
+    /* Títulos das seções menores */
     .secao h2 {
         font-size: 1.6rem;
     }
@@ -1310,6 +1322,7 @@ ol {
         gap: 2px;
     }
 
+    /* Valor alinhado à esquerda, embaixo do rótulo */
     .cartao-dados strong {
         text-align: left;
     }
